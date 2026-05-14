@@ -141,7 +141,7 @@ function App() {
         <div className="relative z-10 flex min-h-screen w-full max-w-md shrink-0 flex-col items-center justify-center gap-3 px-4 py-8 text-center text-white transition-opacity duration-500">
           <h1 className="text-6xl font-bold font-cursive">A Starry Night</h1>
 
-          <p className="text-lg italic text-gray-400">
+          <p className=" italic text-gray-400">
             A cold, starry night awaits — and a warm feeling we can't quite
             name.
           </p>
@@ -181,6 +181,7 @@ function App() {
             ref={invitationCardRef}
             className="relative z-10 mt-10 flex w-full max-w-md shrink-0 flex-col gap-4 px-4 pb-16 pt-10"
           >
+            <h1 className="font-cursive text-center text-5xl">You are invited!</h1>
             <InvitationCard
               guest={guest}
               onRSVP={handleRSVP}

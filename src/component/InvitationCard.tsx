@@ -110,7 +110,7 @@ function InvitationCard({
   return (
     <>
       <div className="invite-stack-in text-start flex flex-col gap-2 rounded-lg border border-gray-800 bg-slate-900 p-6 shadow-md backdrop-blur-sm">
-        <h2 className="text-3xl font-bold">{guest.name}</h2>
+        <h2 className="text-3xl font-medium">{guest.name}</h2>
         <span className="flex items-center gap-2 w-fit rounded-md bg-blue-500/10 px-3 py-1 text-xs text-blue-500">
           <p>
             You&apos;re part of the{" "}
@@ -134,14 +134,14 @@ function InvitationCard({
             {guest.is_attending ? "Attending" : "Not attending"}
           </span>
         </p>
-        <p className="text-xs text-gray-400 flex flex-col gap-2">
-          Your Message:{" "}
-          {guest.message ? (
+        {guest.message ? (
+          <span className="flex flex-col gap-2 text-xs text-gray-400 ">
+            Your Message:{" "}
             <p className="flex flex-col rounded-lg border border-white/10  px-3 py-2 text-xs leading-relaxed text-gray-300 transition-colors duration-200">
               {guest.message}
             </p>
-          ) : null}
-        </p>
+          </span>
+        ) : null}
 
         <ul className="flex flex-col gap-2 text-sm">
           <li>
