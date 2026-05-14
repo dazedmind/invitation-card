@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+.star {
+  position: absolute;
+  margin-left: -1px;
+  margin-top: -1px;
+  border-radius: 9999px;
+  background: #fff;
+  box-shadow: 0 0 3px 1px rgba(255, 255, 255, 0.35);
+  animation: twinkle ease-in-out infinite;
+}
+
+.star-glow {
+  box-shadow:
+    0 0 4px 1px rgba(255, 255, 255, 0.5),
+    0 0 12px 2px rgba(200, 220, 255, 0.35);
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slide-hint-shimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: -100% 50%;
+  }
+}
+
+.slide-to-open__hint {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.55) 45%,
+    rgba(255, 255, 255, 0.22) 90%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: slide-hint-shimmer 2.8s ease-in-out infinite;
+}
+
+@keyframes backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes step-swap {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-up-soft {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.invite-modal-backdrop {
+  animation: backdrop-in 0.32s ease-out both;
+}
+
+.invite-modal-panel {
+  animation: panel-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.invite-modal-step {
+  animation: step-swap 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.invite-stack-in {
+  animation: fade-up-soft 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.invite-stack-in-delayed {
+  animation: fade-up-soft 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 0.1s;
+}
+
+.invite-pressable {
+  transition:
+    transform 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.22s ease,
+    filter 0.22s ease,
+    border-color 0.22s ease,
+    background-color 0.22s ease;
+}
+
+.invite-pressable:hover {
+  filter: brightness(1.06);
+}
+
+.invite-pressable:active {
+  transform: scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .invite-modal-backdrop,
+  .invite-modal-panel,
+  .invite-modal-step,
+  .invite-stack-in,
+  .invite-stack-in-delayed {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  .invite-pressable,
+  .invite-pressable:active {
+    transition: none;
+    transform: none;
+  }
+}
