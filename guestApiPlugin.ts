@@ -1,8 +1,10 @@
 import type { IncomingMessage, ServerResponse } from 'node:http'
 import type { Plugin } from 'vite'
 
-import { lookupGuestByCode } from './src/server/lookupGuest'
-import { updateGuest } from './src/server/updateGuest'
+import {
+  handleGuestLookupGet,
+  handleGuestRsvpPost,
+} from './src/server/guestHttpHandlers'
 
 function readBody(req: IncomingMessage): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -17,6 +19,14 @@ function readBody(req: IncomingMessage): Promise<string> {
   })
 }
 
+function sendJson(res: ServerResponse, result: Awaited<ReturnType<typeof handleGuestLookupGet>>) {
+  res.statusCode = result.statusCode
+  for (const [k, v] of Object.entries(result.headers)) {
+    res.setHeader(k, v)
+  }
+  res.end(result.body)
+}
+
 function guestApiMiddleware() {
   return (req: IncomingMessage, res: ServerResponse, next: () => void) => {
     const rawUrl = req.url ?? ''
@@ -27,69 +37,20 @@ function guestApiMiddleware() {
 
     void (async () => {
       const databaseUrl = process.env.DATABASE_URL
-      if (!databaseUrl) {
-        res.statusCode = 500
-        res.setHeader('Content-Type', 'application/json')
-        res.end(JSON.stringify({ error: 'missing_database_url' }))
-        return
-      }
-
       const u = new URL(rawUrl, 'http://vite.local')
 
       try {
         if (req.method === 'GET' && u.pathname === '/api/guest') {
           const code = u.searchParams.get('code') ?? ''
-          if (code.trim().length !== 6) {
-            res.statusCode = 400
-            res.setHeader('Content-Type', 'application/json')
-            res.end(JSON.stringify({ error: 'invalid_code' }))
-            return
-          }
-
-          const guest = await lookupGuestByCode(databaseUrl, code)
-          res.setHeader('Content-Type', 'application/json')
-          if (!guest) {
-            res.statusCode = 404
-            res.end(JSON.stringify({ error: 'not_found' }))
-            return
-          }
-          res.statusCode = 200
-          res.end(JSON.stringify({ guest }))
+          const result = await handleGuestLookupGet(code, databaseUrl)
+          sendJson(res, result)
           return
         }
 
         if (req.method === 'POST' && u.pathname === '/api/guest/rsvp') {
-          let body: { id?: unknown; is_attending?: unknown; message?: unknown }
-          try {
-            body = JSON.parse((await readBody(req)) || '{}') as typeof body
-          } catch {
-            res.statusCode = 400
-            res.setHeader('Content-Type', 'application/json')
-            res.end(JSON.stringify({ error: 'invalid_json' }))
-            return
-          }
-
-          const id = typeof body.id === 'number' ? body.id : Number(body.id)
-          if (!Number.isFinite(id)) {
-            res.statusCode = 400
-            res.setHeader('Content-Type', 'application/json')
-            res.end(JSON.stringify({ error: 'invalid_id' }))
-            return
-          }
-
-          const isAttending =
-            typeof body.is_attending === 'boolean' ? body.is_attending : true
-          const message =
-            typeof body.message === 'string' ? body.message : undefined
-
-          await updateGuest(databaseUrl, id, {
-            is_attending: isAttending,
-            message,
-          })
-
-          res.statusCode = 200
-          res.setHeader('Content-Type', 'application/json')
-          res.end(JSON.stringify({ ok: true }))
+          const raw = await readBody(req)
+          const result = await handleGuestRsvpPost(raw, databaseUrl)
+          sendJson(res, result)
           return
         }
 

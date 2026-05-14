@@ -4,8 +4,6 @@ import {
   GoClock,
   GoLinkExternal,
   GoLocation,
-  GoStar,
-  GoStarFill,
 } from "react-icons/go";
 
 import type { GuestPublic } from "../types/guest";
@@ -114,7 +112,6 @@ function InvitationCard({
       <div className="invite-stack-in text-start flex flex-col gap-2 rounded-lg border border-gray-800 bg-slate-900 p-6 shadow-md backdrop-blur-sm">
         <h2 className="text-3xl font-bold">{guest.name}</h2>
         <span className="flex items-center gap-2 w-fit rounded-md bg-blue-500/10 px-3 py-1 text-xs text-blue-500">
-          {/* <GoStarFill/>  */}
           <p>
             You&apos;re part of the{" "}
             <span className="font-bold">{guest.guest_type}!</span>

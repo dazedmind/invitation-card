@@ -1,0 +1,21 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+# Same paths the Vite app uses in fetch()
+[[redirects]]
+  from = "/api/guest"
+  to = "/.netlify/functions/guest-lookup"
+  status = 200
+
+[[redirects]]
+  from = "/api/guest/rsvp"
+  to = "/.netlify/functions/guest-rsvp"
+  status = 200
+
+# SPA — must be last
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
