@@ -80,7 +80,7 @@ function BackgroundMusic({ src, volume = 0.3 }: BackgroundMusicProps) {
       />
       
       {/* Floating music control button */}
-      <div className="fixed bottom-6 right-6 z-50 flex gap-2">
+      <div className="fixed bottom-10 right-6 z-50 flex gap-2">
         <button
           onClick={toggleMute}
           className="group flex items-center gap-2 rounded-full border border-white/20 bg-slate-900/80 px-4 py-3 text-white shadow-lg backdrop-blur-sm transition-all hover:border-white/30 hover:bg-slate-800/90"

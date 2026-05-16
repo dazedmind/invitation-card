@@ -227,14 +227,14 @@ function HomePage() {
         {/* 3. Footer wrapper - sits perfectly at the bottom of the screen */}
         <div className="flex gap-1 p-4 text-sm w-full items-center justify-center text-gray-400 relative z-30 mt-auto shrink-0">
           <span>
-            Created by{" "}
+            Crafted by{" "}
             <a
               className="text-blue-400"
               href="https://johnallen.is-a.dev/"
               target="_blank"
               rel="noreferrer"
             >
-              John Allen Valeña
+              allen
             </a>
           </span>
           •
