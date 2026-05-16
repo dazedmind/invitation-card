@@ -8,6 +8,7 @@ import type { GuestPublic } from "../types/guest";
 import FallingSnow from "../components/SnowFall";
 import BlurText from "../components/BlurText";
 import BackgroundMusic from "../components/BackgroundMusic";
+import { GoSync } from "react-icons/go";
 
 function starProps(seed: number) {
   const r = (n: number) => {
@@ -119,9 +120,15 @@ function HomePage() {
     [guest?.id],
   );
 
+  function handleReset(){
+    setOpened(false);
+    setInvitationCode("");
+  }
+
   return (
     <>
-      <main className="relative flex flex-col no-scrollbar items-center overflow-y-auto bg-linear-to-b from-slate-950 to-gray-900">
+      {/* 1. Main wrapper is strictly 100dvh when closed, but becomes auto-scrolling when opened */}
+      <main className={`relative flex flex-col no-scrollbar items-center bg-linear-to-b from-slate-950 to-gray-900 ${opened ? 'h-dvh overflow-y-auto' : 'h-dvh overflow-hidden'}`}>
         <div
           className="pointer-events-none absolute inset-0 z-0 min-h-full"
           aria-hidden
@@ -145,51 +152,10 @@ function HomePage() {
           src="/music/nights_like_this.mp3" 
           volume={0.3} 
         />
-
-        <div className="relative z-30 flex min-h-screen w-full max-w-md shrink-0 flex-col items-center justify-center gap-3 px-6 text-center text-white transition-opacity duration-500">
-          <BlurText
-            text="A Starry Night"
-            className="text-6xl font-bold font-cursive"
-            delay={0.4}
-            animateBy="words"
-            direction="bottom"
-          />
-
-          <p className="fade-in-up-delay-1 italic text-gray-400">
-            A cold, starry night awaits — and a warm feeling we can't quite
-            name.
-          </p>
-
-          <div className="flex w-full flex-col gap-3 fade-in-up-delay-2">
-            <input
-              type="text"
-              value={invitationCode}
-              className="w-full rounded-full border border-gray-700 bg-gray-800 px-4 py-3 text-center text-white uppercase outline-none transition-[border-color,box-shadow,background-color] duration-200 placeholder:text-gray-500"
-              placeholder="Enter invitation code"
-              minLength={6}
-              maxLength={6}
-              onChange={(e) => {
-                setInvitationCode(e.target.value);
-                setInviteLookupError(null);
-              }}
-              aria-invalid={inviteLookupError ? true : undefined}
-              aria-describedby={
-                inviteLookupError ? "invite-code-error" : undefined
-              }
-            />
-            <SlideToOpen canOpen={hasInvitationCode} onOpen={handleSlideOpen} />
-            {inviteLookupError ? (
-              <p
-                id="invite-code-error"
-                className="text-sm text-red-400 transition-opacity duration-200"
-                role="alert"
-              >
-                {inviteLookupError}
-              </p>
-            ) : null}
-          </div>
-        </div>
-
+  
+        {/* 2. FIXED: Changed h-[100dvh] to flex-1. It will now naturally expand to fill all 
+            available space ABOVE the footer without pushing the footer off-screen. */}
+       
         {opened && guest ? (
           <div
             ref={invitationCardRef}
@@ -204,18 +170,71 @@ function HomePage() {
               onCantGo={handleCantGo}
             />
             <GuideCard />
-          </div>
-        ) : null}
 
-        <div className="flex gap-1 p-4 text-sm w-full items-center justify-center">
+            <button onClick={handleReset} className="bg-blue-400 rounded-full p-3 text-white cursor-pointer">
+              <span className="flex items-center justify-center gap-2">
+                <GoSync strokeWidth={1}/>
+                Enter another code
+              </span>
+            </button>
+          </div>
+        ) : 
+        <div className="relative z-30 flex flex-1 w-full max-w-md shrink-0 flex-col items-center justify-center gap-3 px-6 text-center text-white transition-opacity duration-500">
+        <BlurText
+          text="A Starry Night"
+          className="text-6xl font-bold font-cursive"
+          delay={0.4}
+          animateBy="words"
+          direction="bottom"
+        />
+
+        <p className="fade-in-up-delay-1 italic text-gray-400">
+          A cold, starry night awaits — and a warm feeling we can't quite
+          name.
+        </p>
+
+        <div className="flex w-full flex-col gap-3 fade-in-up-delay-2">
+          <input
+            type="text"
+            value={invitationCode}
+            className="w-full rounded-full border border-gray-700 bg-gray-800 px-4 py-3 text-center text-white uppercase outline-none transition-[border-color,box-shadow,background-color] duration-200 placeholder:text-gray-500"
+            placeholder="Enter invitation code"
+            minLength={6}
+            maxLength={6}
+            onChange={(e) => {
+              setInvitationCode(e.target.value);
+              setInviteLookupError(null);
+            }}
+            aria-invalid={inviteLookupError ? true : undefined}
+            aria-describedby={
+              inviteLookupError ? "invite-code-error" : undefined
+            }
+          />
+          <SlideToOpen canOpen={hasInvitationCode} onOpen={handleSlideOpen} />
+          {inviteLookupError ? (
+            <p
+              id="invite-code-error"
+              className="text-sm text-red-400 transition-opacity duration-200"
+              role="alert"
+            >
+              {inviteLookupError}
+            </p>
+          ) : null}
+        </div>
+      </div>
+        }
+  
+        {/* 3. Footer wrapper - sits perfectly at the bottom of the screen */}
+        <div className="flex gap-1 p-4 text-sm w-full items-center justify-center text-gray-400 relative z-30 mt-auto shrink-0">
           <span>
             Created by{" "}
             <a
               className="text-blue-400"
               href="https://johnallen.is-a.dev/"
               target="_blank"
+              rel="noreferrer"
             >
-              Allen
+              John Allen Valeña
             </a>
           </span>
           •
@@ -227,7 +246,7 @@ function HomePage() {
           </span>
         </div>
         <FallingSnow />
-
+  
       </main>
     </>
   );
