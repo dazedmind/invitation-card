@@ -22,7 +22,8 @@
   },
   "include": [
     "vite.config.ts",
-    "guestApiPlugin.ts",
+    "apiPlugin.ts",
+    "scripts/**/*.ts",
     "src/server/**/*.ts",
     "netlify/functions/**/*.ts"
   ]

@@ -3,7 +3,6 @@
   publish = "dist"
   functions = "netlify/functions"
 
-# Same paths the Vite app uses in fetch()
 [[redirects]]
   from = "/api/guest"
   to = "/.netlify/functions/guest-lookup"
@@ -14,7 +13,21 @@
   to = "/.netlify/functions/guest-rsvp"
   status = 200
 
-# SPA — must be last
+[[redirects]]
+  from = "/api/admin/login"
+  to = "/.netlify/functions/admin-login"
+  status = 200
+
+[[redirects]]
+  from = "/api/admin/session"
+  to = "/.netlify/functions/admin-session"
+  status = 200
+
+[[redirects]]
+  from = "/api/admin/guests"
+  to = "/.netlify/functions/admin-guests"
+  status = 200
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
