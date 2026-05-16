@@ -26,7 +26,7 @@ function FallingSnow() {
   }, [])
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden">
+    <div className="pointer-events-none fixed inset-0 z-10 overflow-hidden">
       {snowflakes.map((flake) => (
         <div
           key={flake.id}

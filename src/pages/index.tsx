@@ -121,7 +121,7 @@ function HomePage() {
 
   return (
     <>
-      <main className="relative flex min-h-screen flex-col items-center overflow-y-auto bg-linear-to-b from-slate-950 to-gray-900">
+      <main className="relative flex flex-col no-scrollbar items-center overflow-y-auto bg-linear-to-b from-slate-950 to-gray-900">
         <div
           className="pointer-events-none absolute inset-0 z-0 min-h-full"
           aria-hidden
@@ -141,13 +141,12 @@ function HomePage() {
             />
           ))}
         </div>
-        <FallingSnow />
         <BackgroundMusic 
           src="/music/nights_like_this.mp3" 
           volume={0.3} 
         />
 
-        <div className="relative z-10 flex min-h-screen w-full max-w-md shrink-0 flex-col items-center justify-center gap-3 px-4 py-8 text-center text-white transition-opacity duration-500">
+        <div className="relative z-30 flex min-h-screen w-full max-w-md shrink-0 flex-col items-center justify-center gap-3 px-6 text-center text-white transition-opacity duration-500">
           <BlurText
             text="A Starry Night"
             className="text-6xl font-bold font-cursive"
@@ -194,7 +193,7 @@ function HomePage() {
         {opened && guest ? (
           <div
             ref={invitationCardRef}
-            className="relative z-10 mt-10 flex w-full max-w-md shrink-0 flex-col gap-4 px-4 pb-16 pt-10"
+            className="relative z-30 mt-10 flex w-full max-w-md shrink-0 flex-col gap-4 px-4 pb-16 pt-10"
           >
             <h1 className="font-cursive text-center text-5xl">
               You are invited!
@@ -208,7 +207,7 @@ function HomePage() {
           </div>
         ) : null}
 
-        <div className="flex gap-1 p-4 text-sm">
+        <div className="flex gap-1 p-4 text-sm w-full items-center justify-center">
           <span>
             Created by{" "}
             <a
@@ -227,6 +226,8 @@ function HomePage() {
             </a>
           </span>
         </div>
+        <FallingSnow />
+
       </main>
     </>
   );
