@@ -10,7 +10,7 @@ export default function GuideCard() {
         <h2 className="text-lg font-bold">Arrival</h2>
         <ul className="flex flex-col gap-2 text-sm list-inside list-disc">
           <li>Arrive at the venue 30 minutes before the event starts.</li>
-          <li>The event will start at 7:00 PM.</li>
+          <li>The event will start at 6:00 PM.</li>
           <li>The event will end at 10:00 PM.</li>
           <li>
             The event will be held at{" "}
@@ -20,11 +20,11 @@ export default function GuideCard() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              400 N La Salle St, Chicago, IL
+              Philam Homes Clubhouse
             </a>
             .
           </li>
-          <li>The venue is located in the heart of Chicago&apos;s downtown.</li>
+          <li>Your presence is greatly appreciated in this magical event</li>
         </ul>
       </div>
 

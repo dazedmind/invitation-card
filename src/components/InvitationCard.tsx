@@ -7,6 +7,7 @@ import {
 } from "react-icons/go";
 
 import type { GuestPublic } from "../types/guest";
+import { Link } from "react-router-dom";
 
 type ModalKind = "closed" | "rsvp" | "cant_go";
 
@@ -139,7 +140,46 @@ function InvitationCard({
               </p>
             </span>
           ) : null}
-
+          {/* <table className="text-sm">
+            <tbody>
+              <tr>
+                <td className="flex items-center gap-1 p-1">
+                <GoCalendar /> 
+                  Date:
+                </td>
+                <td>
+                  July 19, 2026
+                </td>
+              </tr>
+              <tr>
+                <td className="flex items-center gap-1 p-1">
+                  <GoClock />
+                  Time:
+                </td>
+                <td>
+                  5:00PM
+                </td>
+              </tr>
+              <tr>
+                <td className="flex items-center gap-1 p-1">
+                  <GoLocation />
+                  Venue:
+                </td>
+                <td>
+                  Philam Homes Clubhouse - Baguio Rd, Quezon City, Metro Manila
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <a href="https://www.google.com/maps/place/Philam+Homes+Clubhouse/@14.6487789,121.0317844,18.32z/data=!4m6!3m5!1s0x3397b6fe5d6549ed:0xea86eacc930c72c7!8m2!3d14.6485786!4d121.0311671!16s%2Fg%2F12hldy57y?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank">
+                  <button
+                    type="button"
+                    className="invite-pressable mt-2 flex w-full cursor-pointer items-center justify-center gap-1 rounded-full border border-transparent py-2 text-center text-sm text-blue-400 hover:text-blue-300"
+                  >
+                    <GoLinkExternal /> View on Google Maps
+                  </button>
+                </a> */}
           <ul className="flex flex-col gap-2 text-sm">
             <li>
               <span className="flex flex-row items-center gap-1">
@@ -150,20 +190,28 @@ function InvitationCard({
             <li>
               <span className="flex flex-row items-center gap-1">
                 <GoClock /> Time:
-                <span className="font-bold">6:00 PM</span>
+                <span className="font-bold">5:00 PM</span>
               </span>
             </li>
             <li>
-              <span className="flex flex-row items-center gap-1">
-                <GoLocation /> Venue:
-                <span className="font-bold">123 Main St, Anytown, USA</span>
+              <span className="flex flex-row items-start gap-1">
+                <span className="flex items-center gap-1">
+                  <GoLocation />
+                  Venue:
+                </span>
+                <span className="font-bold">Philam Homes Clubhouse, QC</span>
               </span>
-              <button
-                type="button"
-                className="invite-pressable mt-2 flex w-full cursor-pointer items-center justify-center gap-1 rounded-full border border-transparent py-2 text-center text-sm text-blue-400 hover:text-blue-300"
-              >
-                <GoLinkExternal /> View on Google Maps
-              </button>
+
+              <a href="https://www.google.com/maps/place/Philam+Homes+Clubhouse/@14.6487789,121.0317844,18.32z/data=!4m6!3m5!1s0x3397b6fe5d6549ed:0xea86eacc930c72c7!8m2!3d14.6485786!4d121.0311671!16s%2Fg%2F12hldy57y?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D"
+              target="_blank">
+                <button
+                  type="button"
+                  className="invite-pressable mt-2 flex w-full cursor-pointer items-center justify-center gap-1 rounded-full border border-transparent py-2 text-center text-sm text-blue-400 hover:text-blue-300"
+                >
+                  <GoLinkExternal /> View on Google Maps
+                </button>
+              </a>
+
             </li>
           </ul>
           <button
