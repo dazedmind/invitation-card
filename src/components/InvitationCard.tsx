@@ -5,9 +5,7 @@ import {
   GoLinkExternal,
   GoLocation,
 } from "react-icons/go";
-
 import type { GuestPublic } from "../types/guest";
-import { Link } from "react-router-dom";
 
 type ModalKind = "closed" | "rsvp" | "cant_go";
 
@@ -202,8 +200,10 @@ function InvitationCard({
                 <span className="font-bold">Philam Homes Clubhouse, QC</span>
               </span>
 
-              <a href="https://www.google.com/maps/place/Philam+Homes+Clubhouse/@14.6487789,121.0317844,18.32z/data=!4m6!3m5!1s0x3397b6fe5d6549ed:0xea86eacc930c72c7!8m2!3d14.6485786!4d121.0311671!16s%2Fg%2F12hldy57y?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D"
-              target="_blank">
+              <a
+                href="https://www.google.com/maps/place/Philam+Homes+Clubhouse/@14.6487789,121.0317844,18.32z/data=!4m6!3m5!1s0x3397b6fe5d6549ed:0xea86eacc930c72c7!8m2!3d14.6485786!4d121.0311671!16s%2Fg%2F12hldy57y?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank"
+              >
                 <button
                   type="button"
                   className="invite-pressable mt-2 flex w-full cursor-pointer items-center justify-center gap-1 rounded-full border border-transparent py-2 text-center text-sm text-blue-400 hover:text-blue-300"
@@ -211,7 +211,6 @@ function InvitationCard({
                   <GoLinkExternal /> View on Google Maps
                 </button>
               </a>
-
             </li>
           </ul>
           <button
@@ -230,7 +229,6 @@ function InvitationCard({
             Can&apos;t Go?
           </button>
         </div>
-     
       </div>
 
       {modalOpen ? (
