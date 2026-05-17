@@ -149,7 +149,7 @@ function HomePage() {
           ))}
         </div>
         <BackgroundMusic 
-          src="/music/nights_like_this.mp3" 
+          src="/music/tejano-blue.mp3" 
           volume={0.3} 
         />
   
