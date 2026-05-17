@@ -109,81 +109,80 @@ function InvitationCard({
 
   return (
     <>
-      <div className="invite-stack-in text-start flex flex-col gap-2 rounded-lg border border-gray-800 bg-slate-900 p-6 shadow-md backdrop-blur-sm">
-        <h2 className="text-3xl font-medium">{guest.name}</h2>
-        <span className="flex items-center gap-2 w-fit rounded-md bg-blue-500/10 px-3 py-1 text-xs text-blue-500">
-          <p>
-            You&apos;re part of the{" "}
-            <span className="font-bold">{guest.guest_type}!</span>
-          </p>
+      <div className="invite-stack-in text-start overflow-hidden rounded-lg border border-gray-800 bg-slate-900 shadow-md backdrop-blur-sm">
+        <span className="">
+          <img src="/starry-bg.png" alt="Starry Background" />
         </span>
 
-        <p className="text-sm text-gray-500">
-          You are invited to a special event:
-        </p>
-
-        <h2 className="text-xl font-medium text-blue-400">
-          Jazzi&apos;s 18th Birthday
-        </h2>
-
-        <p className="text-xs text-gray-400">
-          Your Status:{" "}
-          <span
-            className={`font-medium text-gray-200  ${guest.is_attending ? "text-green-300" : "text-gray-400"}`}
-          >
-            {guest.is_attending ? "Attending" : "Not attending"}
-          </span>
-        </p>
-        {guest.message ? (
-          <span className="flex flex-col gap-2 text-xs text-gray-400 ">
-            Your Message:{" "}
-            <p className="flex flex-col rounded-lg border border-white/10  px-3 py-2 text-xs leading-relaxed text-gray-300 transition-colors duration-200">
-              {guest.message}
+        <div className="flex flex-col gap-2 p-6">
+          <h2 className="text-3xl font-semibold text-blue-400">{guest.name}</h2>
+          <span className="flex items-center gap-2 w-fit rounded-md bg-blue-500/10 px-3 py-1 text-xs text-blue-500">
+            <p>
+              You&apos;re part of the{" "}
+              <span className="font-bold">{guest.guest_type}!</span>
             </p>
           </span>
-        ) : null}
 
-        <ul className="flex flex-col gap-2 text-sm">
-          <li>
-            <span className="flex flex-row items-center gap-1">
-              <GoCalendar /> Date:
-              <span className="font-bold">July 19, 2026</span>
-            </span>
-          </li>
-          <li>
-            <span className="flex flex-row items-center gap-1">
-              <GoClock /> Time:
-              <span className="font-bold">6:00 PM</span>
-            </span>
-          </li>
-          <li>
-            <span className="flex flex-row items-center gap-1">
-              <GoLocation /> Venue:
-              <span className="font-bold">123 Main St, Anytown, USA</span>
-            </span>
-            <button
-              type="button"
-              className="invite-pressable mt-2 flex w-full cursor-pointer items-center justify-center gap-1 rounded-full border border-transparent py-2 text-center text-sm text-blue-400 hover:text-blue-300"
+          <p className="text-xs text-gray-400">
+            Your Status:{" "}
+            <span
+              className={`font-medium text-gray-200  ${guest.is_attending ? "text-green-300" : "text-gray-400"}`}
             >
-              <GoLinkExternal /> View on Google Maps
-            </button>
-          </li>
-        </ul>
-        <button
-          type="button"
-          onClick={openRsvpModal}
-          disabled={guest.is_attending}
-          className={`invite-pressable w-full cursor-pointer rounded-full p-2 text-white ${guest.is_attending ? "bg-gray-100/50" : "bg-blue-500 hover:bg-blue-400"}`}
-        >
-          {guest.is_attending ? "RSVP Confirmed" : "RSVP"}
-        </button>
-        <button
-          type="button"
-          onClick={openCantGoModal}
-          className="invite-pressable w-full cursor-pointer rounded-full border border-gray-700 bg-transparent p-2 text-white hover:border-gray-500 hover:bg-white/5"
-        >
-          Can&apos;t Go?
-        </button>
+              {guest.is_attending ? "Attending" : "Not attending"}
+            </span>
+          </p>
+          {guest.message ? (
+            <span className="flex flex-col gap-2 text-xs text-gray-400 ">
+              Your Message:{" "}
+              <p className="flex flex-col rounded-lg border border-white/10  px-3 py-2 text-xs leading-relaxed text-gray-300 transition-colors duration-200">
+                {guest.message}
+              </p>
+            </span>
+          ) : null}
+
+          <ul className="flex flex-col gap-2 text-sm">
+            <li>
+              <span className="flex flex-row items-center gap-1">
+                <GoCalendar /> Date:
+                <span className="font-bold">July 19, 2026</span>
+              </span>
+            </li>
+            <li>
+              <span className="flex flex-row items-center gap-1">
+                <GoClock /> Time:
+                <span className="font-bold">6:00 PM</span>
+              </span>
+            </li>
+            <li>
+              <span className="flex flex-row items-center gap-1">
+                <GoLocation /> Venue:
+                <span className="font-bold">123 Main St, Anytown, USA</span>
+              </span>
+              <button
+                type="button"
+                className="invite-pressable mt-2 flex w-full cursor-pointer items-center justify-center gap-1 rounded-full border border-transparent py-2 text-center text-sm text-blue-400 hover:text-blue-300"
+              >
+                <GoLinkExternal /> View on Google Maps
+              </button>
+            </li>
+          </ul>
+          <button
+            type="button"
+            onClick={openRsvpModal}
+            disabled={guest.is_attending}
+            className={`invite-pressable w-full cursor-pointer rounded-full p-2 text-white ${guest.is_attending ? "bg-gray-100/50" : "bg-blue-500 hover:bg-blue-400"}`}
+          >
+            {guest.is_attending ? "RSVP Confirmed" : "RSVP"}
+          </button>
+          <button
+            type="button"
+            onClick={openCantGoModal}
+            className="invite-pressable w-full cursor-pointer rounded-full border border-gray-700 bg-transparent p-2 text-white hover:border-gray-500 hover:bg-white/5"
+          >
+            Can&apos;t Go?
+          </button>
+        </div>
+     
       </div>
 
       {modalOpen ? (

@@ -155,14 +155,14 @@ function HomePage() {
   
         {/* 2. FIXED: Changed h-[100dvh] to flex-1. It will now naturally expand to fill all 
             available space ABOVE the footer without pushing the footer off-screen. */}
-       
         {opened && guest ? (
           <div
             ref={invitationCardRef}
-            className="relative z-30 mt-10 flex w-full max-w-md shrink-0 flex-col gap-4 px-4 pb-16 pt-10"
+            className="relative z-30 mt-10 flex w-full max-w-md shrink-0 flex-col gap-4 px-6 pb-16 pt-10"
           >
-            <h1 className="font-cursive text-center text-5xl">
+            <h1 className="font-cursive text-center text-5xl flex flex-col">
               You are invited!
+              <span className="font-sans font-medium text-blue-500 text-3xl">Jazzi's 18th Birthday</span>
             </h1>
             <InvitationCard
               guest={guest}
