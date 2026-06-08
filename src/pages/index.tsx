@@ -28,7 +28,7 @@ function starProps(seed: number) {
 function HomePage() {
   const [opened, setOpened] = useState(false);
   const [invitationCode, setInvitationCode] = useState("");
-  const [guest, setGuest] = useState<GuestPublic | null>(null);
+  const [guests, setGuests] = useState<GuestPublic[]>([]);
   const [inviteLookupError, setInviteLookupError] = useState<string | null>(
     null,
   );
@@ -58,71 +58,78 @@ function HomePage() {
       const res = await fetch(`/api/guest?code=${encodeURIComponent(code)}`);
       if (res.status === 404) {
         setInviteLookupError("Invitation code does not exist");
-        setGuest(null);
+        setGuests([]);
         return false;
       }
       if (!res.ok) {
         setInviteLookupError(
           "Unable to verify the invitation code. Try again.",
         );
-        setGuest(null);
+        setGuests([]);
         return false;
       }
-      const data = (await res.json()) as { guest: GuestPublic };
-      setGuest(data.guest);
+      const data = (await res.json()) as { guests: GuestPublic[] };
+      setGuests(data.guests);
       setOpened(true);
       return true;
     } catch {
       setInviteLookupError("Unable to verify the invitation code. Try again.");
-      setGuest(null);
+      setGuests([]);
       return false;
     }
   }, [invitationCode]);
 
   const handleRSVP = useCallback(
-    async (message: string) => {
-      const id = guest?.id;
-      if (id == null) return;
+    async (guestId: number, message: string) => {
+      if (guestId == null) return;
       const res = await fetch("/api/guest/rsvp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          id,
+          id: guestId,
           is_attending: true,
           message: message.trim(),
         }),
       });
       if (!res.ok) throw new Error("Failed to update guest");
-      setGuest((g) =>
-        g ? { ...g, is_attending: true, message: message.trim() } : g,
+      setGuests((prevGuests) =>
+        prevGuests.map((g) =>
+          g.id === guestId
+            ? { ...g, is_attending: true, message: message.trim() }
+            : g,
+        ),
       );
     },
-    [guest?.id],
+    [],
   );
 
   const handleCantGo = useCallback(
-    async (reason: string) => {
-      const id = guest?.id;
-      if (id == null) return;
+    async (guestId: number, reason: string) => {
+      if (guestId == null) return;
       const message = `[Can't attend] ${reason.trim()}`;
       const res = await fetch("/api/guest/rsvp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          id,
+          id: guestId,
           is_attending: false,
           message,
         }),
       });
       if (!res.ok) throw new Error("Failed to update guest");
-      setGuest((g) => (g ? { ...g, is_attending: false, message } : g));
+      setGuests((prevGuests) =>
+        prevGuests.map((g) =>
+          g.id === guestId ? { ...g, is_attending: false, message } : g,
+        ),
+      );
     },
-    [guest?.id],
+    [],
   );
 
   function handleReset(){
     setOpened(false);
     setInvitationCode("");
+    setGuests([]);
   }
 
   return (
@@ -155,28 +162,32 @@ function HomePage() {
   
         {/* 2. FIXED: Changed h-[100dvh] to flex-1. It will now naturally expand to fill all 
             available space ABOVE the footer without pushing the footer off-screen. */}
-        {opened && guest ? (
+        {opened && guests.length > 0 ? (
           <div
             ref={invitationCardRef}
             className="relative z-30 mt-10 flex w-full max-w-md shrink-0 flex-col gap-4 px-6 pb-16 pt-10"
           >
             <h1 className="font-cursive text-center text-5xl flex flex-col">
               You are invited!
-              <span className="font-sans font-medium text-blue-500 text-3xl">Jazzi's 18th Birthday</span>
+              <span className="font-serif font-medium text-blue-500 text-3xl"> — Jazzi's 18th Birthday —</span>
             </h1>
             <InvitationCard
-              guest={guest}
+              guests={guests}
               onRSVP={handleRSVP}
               onCantGo={handleCantGo}
             />
             <GuideCard />
-
+            <h1 className="font-serif italic text-gray-400 text-center py-4">
+              "Your presence will truly make this magical evening complete."
+            </h1>
             <button onClick={handleReset} className="bg-blue-400 rounded-full p-3 text-white cursor-pointer">
               <span className="flex items-center justify-center gap-2">
                 <GoSync strokeWidth={1}/>
                 Enter another code
               </span>
             </button>
+
+ 
           </div>
         ) : 
         <div className="relative z-30 flex flex-1 w-full max-w-md shrink-0 flex-col items-center justify-center gap-3 px-6 text-center text-white transition-opacity duration-500">

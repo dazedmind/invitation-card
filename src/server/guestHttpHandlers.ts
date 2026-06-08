@@ -26,11 +26,11 @@ export async function handleGuestLookupGet(
     return json(400, { error: 'invalid_code' })
   }
   try {
-    const guest = await lookupGuestByCode(databaseUrl, code)
-    if (!guest) {
+    const guests = await lookupGuestByCode(databaseUrl, code)
+    if (guests.length === 0) {
       return json(404, { error: 'not_found' })
     }
-    return json(200, { guest })
+    return json(200, { guests })
   } catch {
     return json(500, { error: 'server_error' })
   }

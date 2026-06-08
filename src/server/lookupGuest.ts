@@ -7,7 +7,7 @@ import type { GuestPublic } from '../types/guest'
 export async function lookupGuestByCode(
   databaseUrl: string,
   code: string,
-): Promise<GuestPublic | null> {
+): Promise<GuestPublic[]> {
   const db = drizzle(databaseUrl)
   const normalized = code.trim().toUpperCase()
   const rows = await db
@@ -20,7 +20,6 @@ export async function lookupGuestByCode(
     })
     .from(guestTable)
     .where(eq(guestTable.invitation_code, normalized))
-    .limit(1)
 
-  return rows[0] ?? null
+  return rows
 }

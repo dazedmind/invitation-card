@@ -1,41 +1,101 @@
 export default function GuideCard() {
   return (
     <div className="invite-stack-in-delayed text-start flex flex-col gap-2 rounded-lg border border-gray-800 bg-slate-900 p-6 shadow-md backdrop-blur-sm transition-[border-color,box-shadow] duration-300 hover:border-gray-700 hover:shadow-lg">
-      <h1 className="text-2xl font-bold">Event Guide</h1>
+      <h1 className="text-2xl font-serif font-semibold text-blue-400">Event Details</h1>
       <p className="text-sm text-gray-500">
-        Here are the event guidelines and instructions.
+        Here are the event guidelines and instructions for Jazz's 18th Debut Birthday.
       </p>
 
-      <div>
-        <h2 className="text-lg font-bold">Arrival</h2>
-        <ul className="flex flex-col gap-2 text-sm list-inside list-disc">
-          <li>Arrive at the venue 30 minutes before the event starts.</li>
-          <li>The event will start at 6:00 PM.</li>
-          <li>The event will end at 10:00 PM.</li>
-          <li>
-            The event will be held at{" "}
+      {/* Schedule */}
+      <div className="flex flex-col gap-2">
+        <h2 className="text-lg font-bold">Schedule of the Evening</h2>
+        <div className="flex flex-col">
+
+          <div className="flex gap-4 items-start">
+            <span className="text-xs font-semibold w-16 shrink-0 pt-0.5">5:30 PM</span>
+            <div className="flex flex-col items-center self-stretch">
+              <div className="w-2 h-2 rounded-full bg-gray-500 mt-1.5 shrink-0" />
+              <div className="w-px flex-1 bg-gray-700 mt-1" />
+            </div>
+            <div className="flex flex-col pb-4 pl-2">
+              <span className="text-sm font-medium">Doors Open</span>
+              <span className="text-xs text-gray-500">Arrive 30 minutes before the event starts</span>
+            </div>
+          </div>
+
+          <div className="flex gap-4 items-start">
+            <span className="text-xs font-semibold w-16 shrink-0 pt-0.5">6:00 PM</span>
+            <div className="flex flex-col items-center self-stretch">
+              <div className="w-2 h-2 rounded-full bg-gray-500 mt-1.5 shrink-0" />
+              <div className="w-px flex-1 bg-gray-700 mt-1" />
+            </div>
+            <div className="flex flex-col pb-4 pl-2">
+              <span className="text-sm font-medium">Celebration Begins</span>
+              <span className="text-xs text-gray-500">The program commences — please be seated</span>
+            </div>
+          </div>
+
+          <div className="flex gap-4 items-start">
+            <span className="text-xs font-semibold w-16 shrink-0 pt-0.5">10:00 PM</span>
+            <div className="flex flex-col items-center self-stretch">
+              <div className="w-2 h-2 rounded-full bg-gray-500 mt-1.5 shrink-0" />
+            </div>
+            <div className="flex flex-col pl-2">
+              <span className="text-sm font-medium">End of the Evening</span>
+              <span className="text-xs text-gray-500">Thank you for celebrating with us</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      {/* Venue */}
+      <div className="flex flex-col gap-2">
+        <h2 className="text-lg font-bold">Venue</h2>
+        <div className="flex items-center gap-3 rounded-lg border border-gray-800 bg-slate-800 p-3">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-gray-700 bg-slate-700 text-gray-300">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+              <circle cx="12" cy="9" r="2.5"/>
+            </svg>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-sm font-medium">Steelworld Tower</span>
             <a
-              className="text-sky-400 underline decoration-sky-400/40 underline-offset-2 transition-colors duration-200 hover:text-sky-300"
-              href="https://www.google.com/maps/place/400+N+La+Salle+St,+Chicago,+IL+60654/@41.882554,-87.6231908,17z/data=!3m1!4b1!4m6!3m5!1s0x880e2c6258fc7937:0xde8c99ad00380d40!8m2!3d41.882554!4d-87.6206159!16s%2Fg%2F11c4022qbz?entry=ttu&g_ep=EgoyMDI2MDIxMi4wIKXMDSoASAFQAw%3D%3D"
+              className="text-xs text-sky-400 underline decoration-sky-400/40 underline-offset-2 transition-colors duration-200 hover:text-sky-300"
+              href="https://www.google.com/maps/place/Steelworld+Tower/data=!4m2!3m1!1s0x0:0x87b8da959fe13123?sa=X&ved=1t:2428&ictx=111"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Philam Homes Clubhouse
+              View on Google Maps →
             </a>
-            .
-          </li>
-          <li>Your presence is greatly appreciated in this magical event</li>
-        </ul>
+          </div>
+        </div>
       </div>
 
-      <div>
+      {/* Attire */}
+      <div className="flex flex-col gap-2">
         <h2 className="text-lg font-bold">Attire</h2>
-        <ul className="flex flex-col gap-2 text-sm list-inside list-disc">
-          <li>Dress code is casual and elegant.</li>
-          <li>No shorts or sandals.</li>
-          <li>Wear your best outfit!</li>
-        </ul>
+        <div className="grid grid-cols-2 gap-2">
+          <div className="flex flex-col gap-1 rounded-lg border border-gray-800 bg-slate-800 p-3">
+            <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Encouraged</span>
+            {["Elegant evening wear", "Smart casual attire", "Your very best look"].map((item) => (
+              <div key={item} className="flex items-center gap-2 text-xs text-gray-300">
+                <span className="text-green-500">✓</span> {item}
+              </div>
+            ))}
+          </div>
+          <div className="flex flex-col gap-1 rounded-lg border border-gray-800 bg-slate-800 p-3">
+            <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Please Avoid</span>
+            {["Shorts", "Sandals", "Overly casual wear"].map((item) => (
+              <div key={item} className="flex items-center gap-2 text-xs text-gray-300">
+                <span className="text-red-500">✕</span> {item}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
+
     </div>
   );
 }

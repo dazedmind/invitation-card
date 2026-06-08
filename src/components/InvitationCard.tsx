@@ -4,19 +4,25 @@ import {
   GoClock,
   GoLinkExternal,
   GoLocation,
+  GoVerified,
+  GoSkip
 } from "react-icons/go";
 import type { GuestPublic } from "../types/guest";
 
 type ModalKind = "closed" | "rsvp" | "cant_go";
+type ModalState = {
+  kind: ModalKind;
+  guestId: number | null;
+};
 
 function InvitationCard({
-  guest,
+  guests,
   onRSVP,
   onCantGo,
 }: {
-  guest: GuestPublic;
-  onRSVP: (message: string) => void | Promise<void>;
-  onCantGo: (reason: string) => void | Promise<void>;
+  guests: GuestPublic[];
+  onRSVP: (guestId: number, message: string) => void | Promise<void>;
+  onCantGo: (guestId: number, reason: string) => void | Promise<void>;
 }) {
   const rsvpTitleId = useId();
   const cantGoTitleId = useId();
@@ -25,14 +31,14 @@ function InvitationCard({
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
   const reasonInputRef = useRef<HTMLTextAreaElement>(null);
 
-  const [modal, setModal] = useState<ModalKind>("closed");
+  const [modal, setModal] = useState<ModalState>({ kind: "closed", guestId: null });
   const [celebrantMessage, setCelebrantMessage] = useState("");
   const [cantGoReason, setCantGoReason] = useState("");
   const [fieldError, setFieldError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   const resetModalUi = useCallback(() => {
-    setModal("closed");
+    setModal({ kind: "closed", guestId: null });
     setCelebrantMessage("");
     setCantGoReason("");
     setFieldError(null);
@@ -44,40 +50,41 @@ function InvitationCard({
   }, [submitting, resetModalUi]);
 
   useEffect(() => {
-    if (modal === "closed") return;
+    if (modal.kind === "closed") return;
     const t = window.setTimeout(() => {
-      if (modal === "rsvp") messageInputRef.current?.focus();
-      if (modal === "cant_go") reasonInputRef.current?.focus();
+      if (modal.kind === "rsvp") messageInputRef.current?.focus();
+      if (modal.kind === "cant_go") reasonInputRef.current?.focus();
     }, 80);
     return () => window.clearTimeout(t);
-  }, [modal]);
+  }, [modal.kind]);
 
   useEffect(() => {
-    if (modal === "closed") return;
+    if (modal.kind === "closed") return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeModal();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [modal, closeModal]);
+  }, [modal.kind, closeModal]);
 
-  const openRsvpModal = () => {
+  const openRsvpModal = (guestId: number) => {
     setFieldError(null);
     setCelebrantMessage("");
-    setModal("rsvp");
+    setModal({ kind: "rsvp", guestId });
   };
 
-  const openCantGoModal = () => {
+  const openCantGoModal = (guestId: number) => {
     setFieldError(null);
     setCantGoReason("");
-    setModal("cant_go");
+    setModal({ kind: "cant_go", guestId });
   };
 
   const submitRsvp = async () => {
+    if (modal.guestId == null) return;
     setSubmitting(true);
     setFieldError(null);
     try {
-      await onRSVP(celebrantMessage.trim());
+      await onRSVP(modal.guestId, celebrantMessage.trim());
       resetModalUi();
     } catch {
       setFieldError("Could not save your RSVP. Please try again.");
@@ -87,6 +94,7 @@ function InvitationCard({
   };
 
   const submitCantGo = async () => {
+    if (modal.guestId == null) return;
     const trimmed = cantGoReason.trim();
     if (!trimmed) {
       setFieldError("Please share why you can't attend.");
@@ -95,7 +103,7 @@ function InvitationCard({
     setSubmitting(true);
     setFieldError(null);
     try {
-      await onCantGo(trimmed);
+      await onCantGo(modal.guestId, trimmed);
       resetModalUi();
     } catch {
       setFieldError("Could not save your response. Please try again.");
@@ -104,7 +112,7 @@ function InvitationCard({
     }
   };
 
-  const modalOpen = modal !== "closed";
+  const modalOpen = modal.kind !== "closed";
 
   return (
     <>
@@ -114,70 +122,6 @@ function InvitationCard({
         </span>
 
         <div className="flex flex-col gap-2 p-6">
-          <h2 className="text-3xl font-semibold text-blue-400">{guest.name}</h2>
-          <span className="flex items-center gap-2 w-fit rounded-md bg-blue-500/10 px-3 py-1 text-xs text-blue-500">
-            <p>
-              You&apos;re part of the{" "}
-              <span className="font-bold">{guest.guest_type}!</span>
-            </p>
-          </span>
-
-          <p className="text-xs text-gray-400">
-            Your Status:{" "}
-            <span
-              className={`font-medium text-gray-200  ${guest.is_attending ? "text-green-300" : "text-gray-400"}`}
-            >
-              {guest.is_attending ? "Attending" : "Not attending"}
-            </span>
-          </p>
-          {guest.message ? (
-            <span className="flex flex-col gap-2 text-xs text-gray-400 ">
-              Your Message:{" "}
-              <p className="flex flex-col rounded-lg border border-white/10  px-3 py-2 text-xs leading-relaxed text-gray-300 transition-colors duration-200">
-                {guest.message}
-              </p>
-            </span>
-          ) : null}
-          {/* <table className="text-sm">
-            <tbody>
-              <tr>
-                <td className="flex items-center gap-1 p-1">
-                <GoCalendar /> 
-                  Date:
-                </td>
-                <td>
-                  July 19, 2026
-                </td>
-              </tr>
-              <tr>
-                <td className="flex items-center gap-1 p-1">
-                  <GoClock />
-                  Time:
-                </td>
-                <td>
-                  5:00PM
-                </td>
-              </tr>
-              <tr>
-                <td className="flex items-center gap-1 p-1">
-                  <GoLocation />
-                  Venue:
-                </td>
-                <td>
-                  Philam Homes Clubhouse - Baguio Rd, Quezon City, Metro Manila
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <a href="https://www.google.com/maps/place/Philam+Homes+Clubhouse/@14.6487789,121.0317844,18.32z/data=!4m6!3m5!1s0x3397b6fe5d6549ed:0xea86eacc930c72c7!8m2!3d14.6485786!4d121.0311671!16s%2Fg%2F12hldy57y?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D"
-                target="_blank">
-                  <button
-                    type="button"
-                    className="invite-pressable mt-2 flex w-full cursor-pointer items-center justify-center gap-1 rounded-full border border-transparent py-2 text-center text-sm text-blue-400 hover:text-blue-300"
-                  >
-                    <GoLinkExternal /> View on Google Maps
-                  </button>
-                </a> */}
           <ul className="flex flex-col gap-2 text-sm">
             <li>
               <span className="flex flex-row items-center gap-1">
@@ -197,39 +141,77 @@ function InvitationCard({
                   <GoLocation />
                   Venue:
                 </span>
-                <span className="font-bold">Philam Homes Clubhouse, QC</span>
+                <span className="font-bold">Steelworld Tower, QC</span>
               </span>
 
               <a
-                href="https://www.google.com/maps/place/Philam+Homes+Clubhouse/@14.6487789,121.0317844,18.32z/data=!4m6!3m5!1s0x3397b6fe5d6549ed:0xea86eacc930c72c7!8m2!3d14.6485786!4d121.0311671!16s%2Fg%2F12hldy57y?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D"
+                href="https://www.google.com/maps/place/Steelworld+Tower/data=!4m2!3m1!1s0x0:0x87b8da959fe13123?sa=X&ved=1t:2428&ictx=111"
                 target="_blank"
               >
                 <button
                   type="button"
-                  className="invite-pressable mt-2 flex w-full cursor-pointer items-center justify-center gap-1 rounded-full border border-transparent py-2 text-center text-sm text-blue-400 hover:text-blue-300"
+                  className="invite-pressable mt-2 flex w-full cursor-pointer items-center justify-center gap-1 rounded-full border border-blue-400 py-2 text-center text-sm text-blue-400 hover:text-blue-300"
                 >
                   <GoLinkExternal /> View on Google Maps
                 </button>
               </a>
             </li>
           </ul>
-          <button
-            type="button"
-            onClick={openRsvpModal}
-            disabled={guest.is_attending}
-            className={`invite-pressable w-full cursor-pointer rounded-full p-2 text-white ${guest.is_attending ? "bg-gray-100/50" : "bg-blue-500 hover:bg-blue-400"}`}
-          >
-            {guest.is_attending ? "RSVP Confirmed" : "RSVP"}
-          </button>
-          <button
-            type="button"
-            onClick={openCantGoModal}
-            className="invite-pressable w-full cursor-pointer rounded-full border border-gray-700 bg-transparent p-2 text-white hover:border-gray-500 hover:bg-white/5"
-          >
-            Can&apos;t Go?
-          </button>
         </div>
       </div>
+
+      {guests.map((guest) => (
+        <div key={guest.id} className="invite-stack-in text-start overflow-hidden rounded-lg border border-gray-800 bg-slate-900 shadow-md backdrop-blur-sm">
+          <div className="p-6 flex flex-col gap-2">
+            
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-serif font-semibold  text-blue-400">
+                {guest.name}
+              </h2>
+              <span
+                  className={`font-medium p-1 text-sm rounded-full w-fit text-gray-200  ${guest.is_attending ? "text-green-300 bg-green-400/10 " : "text-gray-400 bg-gray-400/10 "}`}
+                >
+                  {guest.is_attending ? <GoVerified /> : <GoSkip />}
+              </span>
+            </div>
+        
+            {guest.guest_type !== "Guest" ? (
+            <span className="flex items-center gap-2 w-fit rounded-md bg-blue-500/10 px-2 py-1 text-xs text-blue-500">
+              <p>
+                You&apos;re part of the{" "}
+                <span className="font-bold">{guest.guest_type}!</span>
+              </p>
+            </span>) : null}
+
+            {guest.message ? (
+              <span className="flex flex-col gap-2 text-xs text-gray-400 ">
+                Your Message:{" "}
+                <p className="flex flex-col rounded-lg border border-white/10  px-3 py-2 text-xs leading-relaxed text-gray-300 transition-colors duration-200">
+                  {guest.message}
+                </p>
+              </span>
+            ) : null}
+
+            <span className="flex flex-row-reverse gap-2 mt-2">
+              <button
+                type="button"
+                onClick={() => openRsvpModal(guest.id)}
+                disabled={guest.is_attending}
+                className={`invite-pressable w-full cursor-pointer text-sm rounded-full p-2 text-white ${guest.is_attending ? "bg-gray-100/50" : "bg-blue-500 hover:bg-blue-400"}`}
+              >
+                {guest.is_attending ? "Confirmed" : "RSVP"}
+              </button>
+              <button
+                type="button"
+                onClick={() => openCantGoModal(guest.id)}
+                className="invite-pressable w-full cursor-pointer text-sm rounded-full border border-gray-700 bg-transparent p-2 text-white hover:border-gray-500 hover:bg-white/5"
+              >
+                Can&apos;t Go?
+              </button>
+            </span>
+          </div>
+        </div>
+      ))}
 
       {modalOpen ? (
         <div className="fixed inset-0 z-80 flex items-end justify-center p-4 sm:items-center">
@@ -243,10 +225,10 @@ function InvitationCard({
           <div
             role="dialog"
             aria-modal="true"
-            aria-labelledby={modal === "rsvp" ? rsvpTitleId : cantGoTitleId}
+            aria-labelledby={modal.kind === "rsvp" ? rsvpTitleId : cantGoTitleId}
             className="invite-modal-panel relative w-full max-w-md overflow-hidden rounded-2xl   bg-slate-900/95 p-6 text-left text-white shadow-[0_24px_80px_-24px_rgba(0,0,0,0.85)]"
           >
-            {modal === "rsvp" ? (
+            {modal.kind === "rsvp" ? (
               <div key="rsvp" className="invite-modal-step flex flex-col gap-4">
                 <span className="flex flex-col gap-1">
                   <h3
