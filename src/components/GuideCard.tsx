@@ -12,7 +12,7 @@ export default function GuideCard() {
         <div className="flex flex-col">
 
           <div className="flex gap-4 items-start">
-            <span className="text-xs font-semibold w-16 shrink-0 pt-0.5">5:30 PM</span>
+            <span className="text-xs font-semibold w-16 shrink-0 pt-0.5">5:00 PM</span>
             <div className="flex flex-col items-center self-stretch">
               <div className="w-2 h-2 rounded-full bg-gray-500 mt-1.5 shrink-0" />
               <div className="w-px flex-1 bg-gray-700 mt-1" />
@@ -24,7 +24,7 @@ export default function GuideCard() {
           </div>
 
           <div className="flex gap-4 items-start">
-            <span className="text-xs font-semibold w-16 shrink-0 pt-0.5">6:00 PM</span>
+            <span className="text-xs font-semibold w-16 shrink-0 pt-0.5">5:30 PM</span>
             <div className="flex flex-col items-center self-stretch">
               <div className="w-2 h-2 rounded-full bg-gray-500 mt-1.5 shrink-0" />
               <div className="w-px flex-1 bg-gray-700 mt-1" />
@@ -79,7 +79,7 @@ export default function GuideCard() {
         <div className="grid grid-cols-2 gap-2">
           <div className="flex flex-col gap-1 rounded-lg border border-gray-800 bg-slate-800 p-3">
             <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Encouraged</span>
-            {["Elegant evening wear", "Smart casual attire", "Your very best look"].map((item) => (
+            {["Elegant evening wear", "Formal attire", "Your very best look"].map((item) => (
               <div key={item} className="flex items-center gap-2 text-xs text-gray-300">
                 <span className="text-green-500">✓</span> {item}
               </div>
@@ -93,6 +93,25 @@ export default function GuideCard() {
               </div>
             ))}
           </div>
+        </div>
+        <h1 className="text-lg font-bold">Recommended Attire Color for Guest</h1>
+          <div className="flex gap-2 items-center">
+            <span className="text-green-500">✓</span>
+
+            <div className="bg-[#5A86AD] w-8 h-8 rounded-full"></div>
+            <div className="bg-[#F7E7CE] w-8 h-8 rounded-full"></div>
+            <div className="bg-[#D3D3D3] w-8 h-8 rounded-full"></div>
+
+          </div>
+        <h1 className="text-lg font-bold">Please Avoid Wearing Dark Colors</h1>
+          <div className="flex gap-2 items-center">
+            <span className="text-red-500">✕</span>
+            <div className="bg-neutral-950 w-8 h-8 rounded-full ring-2 ring-blue-200"></div>
+            <div className="bg-[#0C1F45] w-8 h-8 rounded-full ring-2 ring-blue-200"></div>
+          </div>
+
+          <div className="flex items-center gap-3 rounded-lg border border-gray-800 bg-slate-800 p-3 mt-4">
+            <p className="text-sm">As much as we would love to accommodate everyone, our venue has limited capacity. We kindly request that only those included in the invitation attend. Thank you for understanding!</p>
         </div>
       </div>
 

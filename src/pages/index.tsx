@@ -79,54 +79,48 @@ function HomePage() {
     }
   }, [invitationCode]);
 
-  const handleRSVP = useCallback(
-    async (guestId: number, message: string) => {
-      if (guestId == null) return;
-      const res = await fetch("/api/guest/rsvp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id: guestId,
-          is_attending: true,
-          message: message.trim(),
-        }),
-      });
-      if (!res.ok) throw new Error("Failed to update guest");
-      setGuests((prevGuests) =>
-        prevGuests.map((g) =>
-          g.id === guestId
-            ? { ...g, is_attending: true, message: message.trim() }
-            : g,
-        ),
-      );
-    },
-    [],
-  );
+  const handleRSVP = useCallback(async (guestId: number, message: string) => {
+    if (guestId == null) return;
+    const res = await fetch("/api/guest/rsvp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: guestId,
+        is_attending: true,
+        message: message.trim(),
+      }),
+    });
+    if (!res.ok) throw new Error("Failed to update guest");
+    setGuests((prevGuests) =>
+      prevGuests.map((g) =>
+        g.id === guestId
+          ? { ...g, is_attending: true, message: message.trim() }
+          : g,
+      ),
+    );
+  }, []);
 
-  const handleCantGo = useCallback(
-    async (guestId: number, reason: string) => {
-      if (guestId == null) return;
-      const message = `[Can't attend] ${reason.trim()}`;
-      const res = await fetch("/api/guest/rsvp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id: guestId,
-          is_attending: false,
-          message,
-        }),
-      });
-      if (!res.ok) throw new Error("Failed to update guest");
-      setGuests((prevGuests) =>
-        prevGuests.map((g) =>
-          g.id === guestId ? { ...g, is_attending: false, message } : g,
-        ),
-      );
-    },
-    [],
-  );
+  const handleCantGo = useCallback(async (guestId: number, reason: string) => {
+    if (guestId == null) return;
+    const message = `[Can't attend] ${reason.trim()}`;
+    const res = await fetch("/api/guest/rsvp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: guestId,
+        is_attending: false,
+        message,
+      }),
+    });
+    if (!res.ok) throw new Error("Failed to update guest");
+    setGuests((prevGuests) =>
+      prevGuests.map((g) =>
+        g.id === guestId ? { ...g, is_attending: false, message } : g,
+      ),
+    );
+  }, []);
 
-  function handleReset(){
+  function handleReset() {
     setOpened(false);
     setInvitationCode("");
     setGuests([]);
@@ -135,7 +129,9 @@ function HomePage() {
   return (
     <>
       {/* 1. Main wrapper is strictly 100dvh when closed, but becomes auto-scrolling when opened */}
-      <main className={`relative flex flex-col no-scrollbar items-center bg-linear-to-b from-slate-950 to-gray-900 ${opened ? 'h-dvh overflow-y-auto' : 'h-dvh overflow-hidden'}`}>
+      <main
+        className={`relative flex flex-col no-scrollbar items-center bg-linear-to-b from-slate-950 to-gray-900 ${opened ? "h-dvh overflow-y-auto" : "h-dvh overflow-hidden"}`}
+      >
         <div
           className="pointer-events-none absolute inset-0 z-0 min-h-full"
           aria-hidden
@@ -155,11 +151,8 @@ function HomePage() {
             />
           ))}
         </div>
-        <BackgroundMusic 
-          src="/music/tejano-blue.mp3" 
-          volume={0.3} 
-        />
-  
+        <BackgroundMusic src="/music/tejano-blue.mp3" volume={0.3} />
+
         {/* 2. FIXED: Changed h-[100dvh] to flex-1. It will now naturally expand to fill all 
             available space ABOVE the footer without pushing the footer off-screen. */}
         {opened && guests.length > 0 ? (
@@ -169,72 +162,108 @@ function HomePage() {
           >
             <h1 className="font-cursive text-center text-5xl flex flex-col">
               You are invited!
-              <span className="font-serif font-medium text-blue-500 text-3xl"> — Jazzi's 18th Birthday —</span>
+              <span className="font-serif font-medium text-blue-500 text-3xl">
+                {" "}
+                — Jazzi's 18th Birthday —
+              </span>
             </h1>
             <InvitationCard
               guests={guests}
               onRSVP={handleRSVP}
               onCantGo={handleCantGo}
             />
+            <span className="">
+              <img
+                src="/DLP-128.jpg"
+                alt="Starry Background"
+                className="rounded-md border border-gray-800 "
+              />
+            </span>
             <GuideCard />
+            <span className="">
+              <img
+                src="/DLP-10.jpg"
+                alt="Starry Background"
+                className="rounded-md border border-gray-800"
+              />
+            </span>
+            <span className="">
+              <img
+                src="/DLP-81.jpg"
+                alt="Starry Background"
+                className="rounded-md border border-gray-800"
+              />
+            </span>
+            <span className="">
+              <img
+                src="/DLP-67.jpg"
+                alt="Starry Background"
+                className="rounded-md border border-gray-800"
+              />
+            </span>
             <h1 className="font-serif italic text-gray-400 text-center py-4">
               "Your presence will truly make this magical evening complete."
             </h1>
-            <button onClick={handleReset} className="bg-blue-400 rounded-full p-3 text-white cursor-pointer">
+
+            <button
+              onClick={handleReset}
+              className="bg-blue-400 rounded-full p-3 text-white cursor-pointer"
+            >
               <span className="flex items-center justify-center gap-2">
-                <GoSync strokeWidth={1}/>
+                <GoSync strokeWidth={1} />
                 Enter another code
               </span>
             </button>
-
- 
           </div>
-        ) : 
-        <div className="relative z-30 flex flex-1 w-full max-w-md shrink-0 flex-col items-center justify-center gap-3 px-6 text-center text-white transition-opacity duration-500">
-        <BlurText
-          text="A Starry Night"
-          className="text-6xl font-bold font-cursive"
-          delay={0.4}
-          animateBy="words"
-          direction="bottom"
-        />
+        ) : (
+          <div className="relative z-30 flex flex-1 w-full max-w-md shrink-0 flex-col items-center justify-center gap-3 px-6 text-center text-white transition-opacity duration-500">
+            <BlurText
+              text="A Starry Night"
+              className="text-6xl font-bold font-cursive"
+              delay={0.4}
+              animateBy="words"
+              direction="bottom"
+            />
 
-        <p className="fade-in-up-delay-1 italic text-gray-400">
-          A cold, starry night awaits — and a warm feeling we can't quite
-          name.
-        </p>
-
-        <div className="flex w-full flex-col gap-3 fade-in-up-delay-2">
-          <input
-            type="text"
-            value={invitationCode}
-            className="w-full rounded-full border border-gray-700 bg-gray-800 px-4 py-3 text-center text-white uppercase outline-none transition-[border-color,box-shadow,background-color] duration-200 placeholder:text-gray-500"
-            placeholder="Enter invitation code"
-            minLength={6}
-            maxLength={6}
-            onChange={(e) => {
-              setInvitationCode(e.target.value);
-              setInviteLookupError(null);
-            }}
-            aria-invalid={inviteLookupError ? true : undefined}
-            aria-describedby={
-              inviteLookupError ? "invite-code-error" : undefined
-            }
-          />
-          <SlideToOpen canOpen={hasInvitationCode} onOpen={handleSlideOpen} />
-          {inviteLookupError ? (
-            <p
-              id="invite-code-error"
-              className="text-sm text-red-400 transition-opacity duration-200"
-              role="alert"
-            >
-              {inviteLookupError}
+            <p className="fade-in-up-delay-1 italic text-gray-400">
+              A cold, starry night awaits — and a warm feeling we can't quite
+              name.
             </p>
-          ) : null}
-        </div>
-      </div>
-        }
-  
+
+            <div className="flex w-full flex-col gap-3 fade-in-up-delay-2">
+              <input
+                type="text"
+                value={invitationCode}
+                className="w-full rounded-full border border-gray-700 bg-gray-800 px-4 py-3 text-center text-white uppercase outline-none transition-[border-color,box-shadow,background-color] duration-200 placeholder:text-gray-500"
+                placeholder="Enter invitation code"
+                minLength={6}
+                maxLength={6}
+                onChange={(e) => {
+                  setInvitationCode(e.target.value);
+                  setInviteLookupError(null);
+                }}
+                aria-invalid={inviteLookupError ? true : undefined}
+                aria-describedby={
+                  inviteLookupError ? "invite-code-error" : undefined
+                }
+              />
+              <SlideToOpen
+                canOpen={hasInvitationCode}
+                onOpen={handleSlideOpen}
+              />
+              {inviteLookupError ? (
+                <p
+                  id="invite-code-error"
+                  className="text-sm text-red-400 transition-opacity duration-200"
+                  role="alert"
+                >
+                  {inviteLookupError}
+                </p>
+              ) : null}
+            </div>
+          </div>
+        )}
+
         {/* 3. Footer wrapper - sits perfectly at the bottom of the screen */}
         <div className="flex gap-1 p-4 text-sm w-full items-center justify-center text-gray-400 relative z-30 mt-auto shrink-0">
           <span>
@@ -257,7 +286,6 @@ function HomePage() {
           </span>
         </div>
         <FallingSnow />
-  
       </main>
     </>
   );

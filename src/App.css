@@ -17,11 +17,13 @@
 }
 
 @keyframes twinkle {
+
   0%,
   100% {
     opacity: 0.15;
     transform: scale(0.85);
   }
+
   50% {
     opacity: 1;
     transform: scale(1);
@@ -32,18 +34,17 @@
   0% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: -100% 50%;
   }
 }
 
 .slide-to-open__hint {
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.22) 0%,
-    rgba(255, 255, 255, 0.55) 45%,
-    rgba(255, 255, 255, 0.22) 90%
-  );
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0.22) 0%,
+      rgba(255, 255, 255, 0.55) 45%,
+      rgba(255, 255, 255, 0.22) 90%);
   background-size: 200% 100%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -55,6 +56,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -65,6 +67,7 @@
     opacity: 0;
     transform: translateY(14px) scale(0.98);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -76,6 +79,7 @@
     opacity: 0;
     transform: translateY(8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -87,6 +91,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -132,6 +137,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .invite-modal-backdrop,
   .invite-modal-panel,
   .invite-modal-step,
@@ -153,6 +159,7 @@
   0% {
     transform: translateY(0) rotate(0deg);
   }
+
   100% {
     transform: translateY(100vh) rotate(360deg);
   }
@@ -167,6 +174,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
