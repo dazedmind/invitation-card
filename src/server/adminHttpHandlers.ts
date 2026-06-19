@@ -62,16 +62,20 @@ export async function handleAdminLoginPost(
   }
 
   try {
+    console.log('1. Attempting login for:', username)  // ← Add
     const admin = await verifyAdminLogin(databaseUrl, username, password)
+    console.log('2. Admin found:', !!admin)  // ← Add
     if (!admin) {
       return json(401, { error: 'invalid_credentials' })
     }
+    console.log('3. Creating token')  // ← Add
     const token = createSessionToken(admin.id, sessionSecret)
     return json(200, {
       token,
       admin: { id: admin.id, username: admin.username },
     })
-  } catch {
+  } catch (error) {
+    console.error('LOGIN ERROR:', error)  // ← Add this to see the actual error
     return json(500, { error: 'server_error' })
   }
 }
