@@ -174,7 +174,7 @@ function HomePage() {
             />
             <span className="">
               <img
-                src="/DLP-128.jpg"
+                src="/DLP-128.webp"
                 alt="Starry Background"
                 className="rounded-md border border-gray-800 "
               />
@@ -182,21 +182,21 @@ function HomePage() {
             <GuideCard />
             <span className="">
               <img
-                src="/DLP-10.jpg"
+                src="/DLP-10.webp"
                 alt="Starry Background"
                 className="rounded-md border border-gray-800"
               />
             </span>
             <span className="">
               <img
-                src="/DLP-81.jpg"
+                src="/DLP-81.webp"
                 alt="Starry Background"
                 className="rounded-md border border-gray-800"
               />
             </span>
             <span className="">
               <img
-                src="/DLP-67.jpg"
+                src="/DLP-67.webp"
                 alt="Starry Background"
                 className="rounded-md border border-gray-800"
               />

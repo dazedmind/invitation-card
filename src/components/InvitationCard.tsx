@@ -5,7 +5,7 @@ import {
   GoLinkExternal,
   GoLocation,
   GoVerified,
-  GoSkip
+  GoSkip,
 } from "react-icons/go";
 import type { GuestPublic } from "../types/guest";
 
@@ -31,7 +31,10 @@ function InvitationCard({
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
   const reasonInputRef = useRef<HTMLTextAreaElement>(null);
 
-  const [modal, setModal] = useState<ModalState>({ kind: "closed", guestId: null });
+  const [modal, setModal] = useState<ModalState>({
+    kind: "closed",
+    guestId: null,
+  });
   const [celebrantMessage, setCelebrantMessage] = useState("");
   const [cantGoReason, setCantGoReason] = useState("");
   const [fieldError, setFieldError] = useState<string | null>(null);
@@ -118,7 +121,7 @@ function InvitationCard({
     <>
       <div className="invite-stack-in text-start overflow-hidden rounded-lg border border-gray-800 bg-slate-900 shadow-md backdrop-blur-sm">
         <span className="">
-          <img src="/starry-bg.png" alt="Starry Background" />
+          <img src="/starry-bg.webp" alt="Starry Background" />
         </span>
 
         <div className="flex flex-col gap-2 p-6">
@@ -161,27 +164,38 @@ function InvitationCard({
       </div>
 
       {guests.map((guest) => (
-        <div key={guest.id} className="invite-stack-in text-start overflow-hidden rounded-lg border border-gray-800 bg-slate-900 shadow-md backdrop-blur-sm">
+        <div
+          key={guest.id}
+          className="invite-stack-in text-start overflow-hidden rounded-lg border border-gray-800 bg-slate-900 shadow-md backdrop-blur-sm"
+        >
           <div className="p-6 flex flex-col gap-2">
-            
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-serif font-semibold  text-blue-400">
                 {guest.name}
               </h2>
               <span
-                  className={`font-medium p-1 text-sm rounded-full w-fit text-gray-200  ${guest.is_attending ? "text-green-300 bg-green-400/10 " : "text-gray-400 bg-gray-400/10 "}`}
-                >
-                  {guest.is_attending ? <GoVerified /> : <GoSkip />}
+                className={`font-medium p-1 text-sm rounded-full w-fit text-gray-200  ${guest.is_attending ? "text-green-300 bg-green-400/10 " : "text-gray-400 bg-gray-400/10 "}`}
+              >
+                {guest.is_attending ? (
+                  <span className="flex items-center gap-1 text-xs px-1">
+                    <GoVerified /> Going
+                  </span>
+                ) : (
+                  <span className="flex items-center gap-1 text-xs px-1">
+                    <GoSkip /> Not Going
+                  </span>
+                )}
               </span>
             </div>
-        
+
             {guest.guest_type !== "Guest" ? (
-            <span className="flex items-center gap-2 w-fit rounded-md bg-blue-500/10 px-2 py-1 text-xs text-blue-500">
-              <p>
-                You&apos;re part of the{" "}
-                <span className="font-bold">{guest.guest_type}!</span>
-              </p>
-            </span>) : null}
+              <span className="flex items-center gap-2 w-fit rounded-md bg-blue-500/10 px-2 py-1 text-xs text-blue-500">
+                <p>
+                  You&apos;re part of the{" "}
+                  <span className="font-bold">{guest.guest_type}!</span>
+                </p>
+              </span>
+            ) : null}
 
             {guest.message ? (
               <span className="flex flex-col gap-2 text-xs text-gray-400 ">
@@ -225,7 +239,9 @@ function InvitationCard({
           <div
             role="dialog"
             aria-modal="true"
-            aria-labelledby={modal.kind === "rsvp" ? rsvpTitleId : cantGoTitleId}
+            aria-labelledby={
+              modal.kind === "rsvp" ? rsvpTitleId : cantGoTitleId
+            }
             className="invite-modal-panel relative w-full max-w-md overflow-hidden rounded-2xl   bg-slate-900/95 p-6 text-left text-white shadow-[0_24px_80px_-24px_rgba(0,0,0,0.85)]"
           >
             {modal.kind === "rsvp" ? (

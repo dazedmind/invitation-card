@@ -1,3 +1,5 @@
+import { GoCheck, GoCircleSlash } from "react-icons/go";
+
 export default function GuideCard() {
   return (
     <div className="invite-stack-in-delayed text-start flex flex-col gap-2 rounded-lg border border-gray-800 bg-slate-900 p-6 shadow-md backdrop-blur-sm transition-[border-color,box-shadow] duration-300 hover:border-gray-700 hover:shadow-lg">
@@ -67,7 +69,7 @@ export default function GuideCard() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              View on Google Maps →
+              View on Google Maps
             </a>
           </div>
         </div>
@@ -96,7 +98,9 @@ export default function GuideCard() {
         </div>
         <h1 className="text-lg font-bold">Recommended Attire Color for Guest</h1>
           <div className="flex gap-2 items-center">
-            <span className="text-green-500">✓</span>
+            <span className="text-green-500">
+              <GoCheck />
+            </span>
 
             <div className="bg-[#5A86AD] w-8 h-8 rounded-full"></div>
             <div className="bg-[#F7E7CE] w-8 h-8 rounded-full"></div>
@@ -105,13 +109,15 @@ export default function GuideCard() {
           </div>
         <h1 className="text-lg font-bold">Please Avoid Wearing Dark Colors</h1>
           <div className="flex gap-2 items-center">
-            <span className="text-red-500">✕</span>
-            <div className="bg-neutral-950 w-8 h-8 rounded-full ring-2 ring-blue-200"></div>
-            <div className="bg-[#0C1F45] w-8 h-8 rounded-full ring-2 ring-blue-200"></div>
+            <span className="text-red-500">
+              <GoCircleSlash />
+            </span>
+            <div className="bg-neutral-950 w-8 h-8 rounded-full ring-2 ring-neutral-500"></div>
+            <div className="bg-[#0C1F45] w-8 h-8 rounded-full ring-2 ring-neutral-500"></div>
           </div>
 
           <div className="flex items-center gap-3 rounded-lg border border-gray-800 bg-slate-800 p-3 mt-4">
-            <p className="text-sm">As much as we would love to accommodate everyone, our venue has limited capacity. We kindly request that only those included in the invitation attend. Thank you for understanding!</p>
+            <p className="text-xs font-serif text-center">As much as we would love to accommodate everyone, our venue has limited capacity. We kindly request that <span className="font-bold text-blue-300">only those included in the invitation</span> attend. Thank you for understanding!</p>
         </div>
       </div>
 

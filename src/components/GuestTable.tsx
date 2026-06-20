@@ -2,7 +2,6 @@ import "../App.css";
 import type { GuestAdmin } from "../types/admin";
 import { GoChevronLeft, GoChevronRight } from "react-icons/go";
 
-
 // ============================================
 // Component: Guest Table with Pagination
 // ============================================
@@ -44,7 +43,7 @@ export function GuestTable({
   return (
     <div className="invite-stack-in-delayed w-full max-w-5xl overflow-hidden rounded-2xl border border-white/10 bg-slate-900/80 shadow-xl backdrop-blur-sm">
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[640px] text-left text-sm">
+        <table className="w-full min-w-160 text-left text-sm">
           <thead>
             <tr className="border-b border-white/10 text-gray-400">
               <th className="px-4 py-3 font-medium">Code</th>
