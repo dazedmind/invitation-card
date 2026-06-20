@@ -164,7 +164,7 @@ function HomePage() {
               You are invited!
               <span className="font-serif font-medium text-blue-500 text-3xl">
                 {" "}
-                — Jazzi's 18th Birthday —
+                Jazzi's 18th Birthday
               </span>
             </h1>
             <InvitationCard
