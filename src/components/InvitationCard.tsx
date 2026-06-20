@@ -173,6 +173,17 @@ function InvitationCard({
               <h2 className="text-2xl font-serif font-semibold  text-blue-400">
                 {guest.name}
               </h2>
+            </div>
+
+            {guest.guest_type !== "Guest" ? (
+              <span className="flex items-center text-sm gap-1">
+                <p>
+                  You&apos;re part of the{" "}
+                </p>
+                <span className="font-bold text-blue-400 flex items-center gap-2 w-fit rounded-md bg-blue-500/10 px-2 py-1">{guest.guest_type}!</span>
+              </span>
+            ) : null}
+
               <span
                 className={`font-medium p-1 text-sm rounded-full w-fit text-gray-200  ${guest.is_attending ? "text-green-300 bg-green-400/10 " : "text-gray-400 bg-gray-400/10 "}`}
               >
@@ -186,17 +197,6 @@ function InvitationCard({
                   </span>
                 )}
               </span>
-            </div>
-
-            {guest.guest_type !== "Guest" ? (
-              <span className="flex items-center gap-2 w-fit rounded-md bg-blue-500/10 px-2 py-1 text-xs text-blue-500">
-                <p>
-                  You&apos;re part of the{" "}
-                  <span className="font-bold">{guest.guest_type}!</span>
-                </p>
-              </span>
-            ) : null}
-
             {guest.message ? (
               <span className="flex flex-col gap-2 text-xs text-gray-400 ">
                 Your Message:{" "}
