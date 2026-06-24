@@ -176,7 +176,7 @@ function HomePage() {
               <img
                 src="/DLP-128.webp"
                 alt="Starry Background"
-                className="rounded-md border border-gray-800 "
+                className="rounded-2xl"
               />
             </span>
             <GuideCard />
@@ -184,21 +184,21 @@ function HomePage() {
               <img
                 src="/DLP-10.webp"
                 alt="Starry Background"
-                className="rounded-md border border-gray-800"
+                className="rounded-2xl"
               />
             </span>
             <span className="">
               <img
                 src="/DLP-81.webp"
                 alt="Starry Background"
-                className="rounded-md border border-gray-800"
+                className="rounded-2xl"
               />
             </span>
             <span className="">
               <img
                 src="/DLP-67.webp"
                 alt="Starry Background"
-                className="rounded-md border border-gray-800"
+                className="rounded-2xl"
               />
             </span>
             <h1 className="font-serif italic text-gray-400 text-center py-4">
@@ -266,18 +266,6 @@ function HomePage() {
 
         {/* 3. Footer wrapper - sits perfectly at the bottom of the screen */}
         <div className="flex gap-1 p-4 text-sm w-full items-center justify-center text-gray-400 relative z-30 mt-auto shrink-0">
-          <span>
-            Crafted by{" "}
-            <a
-              className="text-blue-400"
-              href="https://johnallen.is-a.dev/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              allen
-            </a>
-          </span>
-          •
           <span>
             Sign in as{" "}
             <a href="/admin" className="text-blue-400">

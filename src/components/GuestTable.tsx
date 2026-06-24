@@ -76,7 +76,7 @@ export function GuestTable({
                     {g.is_attending ? "Yes" : "No"}
                   </span>
                 </td>
-                <td className="max-w-[200px] truncate px-4 py-3 text-gray-400">
+                <td className="max-w-50 truncate px-4 py-3 text-gray-400">
                   {g.message || "—"}
                 </td>
                 <td className="flex items-center gap-1 px-4 py-3">

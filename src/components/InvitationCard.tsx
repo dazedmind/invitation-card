@@ -119,7 +119,7 @@ function InvitationCard({
 
   return (
     <>
-      <div className="invite-stack-in text-start overflow-hidden rounded-lg border border-gray-800 bg-slate-900 shadow-md backdrop-blur-sm">
+      <div className="invite-stack-in text-start overflow-hidden rounded-2xl bg-slate-900 shadow-md backdrop-blur-sm">
         <span className="">
           <img src="/starry-bg.webp" alt="Starry Background" />
         </span>
@@ -166,7 +166,7 @@ function InvitationCard({
       {guests.map((guest) => (
         <div
           key={guest.id}
-          className="invite-stack-in text-start overflow-hidden rounded-lg border border-gray-800 bg-slate-900 shadow-md backdrop-blur-sm"
+          className="invite-stack-in text-start overflow-hidden rounded-2xl  bg-slate-900 shadow-md backdrop-blur-sm"
         >
           <div className="p-6 flex flex-col gap-2">
             <div className="flex items-center justify-between">
@@ -200,7 +200,7 @@ function InvitationCard({
             {guest.message ? (
               <span className="flex flex-col gap-2 text-xs text-gray-400 ">
                 Your Message:{" "}
-                <p className="flex flex-col rounded-lg border border-white/10  px-3 py-2 text-xs leading-relaxed text-gray-300 transition-colors duration-200">
+                <p className="flex flex-col rounded-lg bg-slate-950/20 px-3 py-2 text-xs leading-relaxed text-gray-400 transition-colors duration-200">
                   {guest.message}
                 </p>
               </span>
@@ -274,7 +274,7 @@ function InvitationCard({
                   rows={4}
                   placeholder="Write something you want to say to Jazzi…"
                   disabled={submitting}
-                  className="min-h-[120px] w-full resize-y rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none duration-200 placeholder:text-gray-500 focus:border-sky-400/50"
+                  className="min-h-30 w-full resize-y rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none duration-200 placeholder:text-gray-500 focus:border-sky-400/50"
                 />
                 {fieldError ? (
                   <p className="text-sm text-amber-300" role="alert">
@@ -331,7 +331,7 @@ function InvitationCard({
                   rows={4}
                   placeholder="Let the host know…"
                   disabled={submitting}
-                  className="min-h-[120px] w-full resize-y rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none duration-200 placeholder:text-gray-500 focus:border-sky-400/50 "
+                  className="min-h-30 w-full resize-y rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none duration-200 placeholder:text-gray-500 focus:border-sky-400/50 "
                 />
                 {fieldError ? (
                   <p className="text-sm text-red-300" role="alert">

@@ -91,9 +91,7 @@ function BackgroundMusic({ src, volume = 0.3 }: BackgroundMusicProps) {
           ) : (
             <GoUnmute className="text-xl" />
           )}
-          <span className="text-sm">
-            {isMuted ? 'Unmuted' : 'Music'}
-          </span>
+     
           
           {/* Sound wave animation when playing and not muted */}
           {isPlaying && !isMuted && (
