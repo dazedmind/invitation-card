@@ -163,7 +163,7 @@ export default function GuideCard() {
         </div>
         <p className="text-xs text-gray-400">
           In honor, of the celebrant, we kindly request that guests refrain
-          from wearing the following colors:
+          from wearing the following colors
         </p>
 
         <div className="flex items-center gap-3 rounded-lg border border-gray-800 bg-slate-800 p-3 mt-4">
