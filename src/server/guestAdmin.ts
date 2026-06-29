@@ -31,7 +31,7 @@ function rowToGuest(row: typeof guestTable.$inferSelect): GuestAdmin {
 
 export async function listGuests(databaseUrl: string): Promise<GuestAdmin[]> {
   const db = drizzle(databaseUrl)
-  const rows = await db.select().from(guestTable).orderBy(asc(guestTable.id))
+  const rows = await db.select().from(guestTable).orderBy(asc(guestTable.invitation_code))
   return rows.map(rowToGuest)
 }
 
